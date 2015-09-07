@@ -1246,17 +1246,15 @@ ul.prosuct-qty{
 	span.menu{
 		display:block;
 		background:#b0aaa0;
-		height: 35px;
 		cursor:pointer;
 	}
 	span.menu:before{
-		content: url(../images/nav-icon.png) no-repeat 0px 0px;
+		background: url(../images/nav-icon.png) no-repeat 13px center #7e4622;
 		position: absolute;
 		right: 0;
 		top: -51px;
 		right: 0px;
-		width: 96%;
-		background: #7e4622;
+		width: 95%;
 		margin: 0 15px;
 		padding: 0.5em 0.5em 0.25em 0.5em;
 		text-align: right;
@@ -1371,17 +1369,16 @@ ul.prosuct-qty{
 	span.menu{
 		display:block;
 		background:#b0aaa0;
-		height: 35px;
 		cursor:pointer;
 	}
 	span.menu:before{
-		content: url(../images/nav-icon.png) no-repeat 0px 0px;
+		background: url(../images/nav-icon.png) no-repeat 13px center #7e4622;
 		position: absolute;
+		height: 50px;
 		right: 0;
 		top: -51px;
 		right: 0px;
-		width: 96%;
-		background: #7e4622;
+		width: 95%;
 		margin: 0 15px;
 		padding: 0.5em 0.5em 0.25em 0.5em;
 		text-align: right;
@@ -1507,13 +1504,12 @@ ul.prosuct-qty{
 		cursor:pointer;
 	}
 	span.menu:before{
-		content: url(../images/nav-icon.png) no-repeat 0px 0px;
+		background: url(../images/nav-icon.png) no-repeat 13px center #7e4622;
 		position: absolute;
 		right: 0;
 		top: -51px;
 		right: 0px;
-		width: 96%;
-		background: #7e4622;
+		width: 92%;
 		margin: 0 15px;
 		padding: 0.5em 0.5em 0.25em 0.5em;
 		text-align: right;
@@ -1683,21 +1679,18 @@ ul.prosuct-qty{
 		clear: both;
 	}
 	span.menu{
-		z-index: 341;
 		display:block;
 		background:#b0aaa0;
 		cursor:pointer;
-		height: 35px;
 	}
 	span.menu:before{
-		content: url(../images/nav-icon.png) no-repeat 0px 0px;
+		background: url(../images/nav-icon.png) no-repeat 13px center #7e4622;
 		position: absolute;
 		right: 0;
 		top: -51px;
 		right: 0px;
 		left: 2px;
 		width: 89%;
-		background: #7e4622;
 		margin: 0 15px;
 		padding: 0.5em 0.5em 0.25em 0.5em;
 		text-align: right;

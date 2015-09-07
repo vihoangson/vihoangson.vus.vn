@@ -70,6 +70,11 @@
 		</div>
 		<!-- header -->
 		<!--- top-nav -->
+		<style>
+			span.menu:before {
+				content:"";
+			}
+		</style>
 		<div class="top-nav">
 			<div class="container">
 				<span class="menu"></span>
