@@ -1251,10 +1251,11 @@ ul.prosuct-qty{
 	span.menu:before{
 		background: url(../images/nav-icon.png) no-repeat 13px center #7e4622;
 		position: absolute;
+		height: 50px;
 		right: 0;
 		top: -51px;
 		right: 0px;
-		width: 95%;
+		width: 96%;
 		margin: 0 15px;
 		padding: 0.5em 0.5em 0.25em 0.5em;
 		text-align: right;
