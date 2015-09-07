@@ -48,13 +48,13 @@
 					<div class="logo">
 						<a href="/"><img src="images/logo.png" title="gaia" /></a>
 					</div>
-					<div class="bottom-header-right" style="display:none;">
+					<div class="bottom-header-right" >
 						<ul>
-							<li><a href="#">My Account</a></li>
-							<li><a href="#">Wishlist</a></li>
-							<li><a href="#">Checkout</a></li>
+							<li><a href="/">My Account</a></li>
+							<li><a href="/">Wishlist</a></li>
+							<li><a href="/">Checkout</a></li>
 						</ul>
-						<div class="search-cart">
+						<div class="search-cart" style="display:none;">
 							<div class="search-box">
 								<form>
 									<input type="text" value="Search..." />
@@ -71,7 +71,8 @@
 		<!-- header -->
 		<!--- top-nav -->
 		<div class="top-nav">
-			<div class="container"><span class="menu"> </span>
+			<div class="container">
+				<span class="menu"></span>
 				<?php 
 				$vihoangson_navwalker = new wp_bootstrap_navwalker;
 				wp_nav_menu( array(

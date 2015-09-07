@@ -1246,6 +1246,7 @@ ul.prosuct-qty{
 	span.menu{
 		display:block;
 		background:#b0aaa0;
+		height: 35px;
 		cursor:pointer;
 	}
 	span.menu:before{
@@ -1370,6 +1371,7 @@ ul.prosuct-qty{
 	span.menu{
 		display:block;
 		background:#b0aaa0;
+		height: 35px;
 		cursor:pointer;
 	}
 	span.menu:before{
@@ -1681,9 +1683,11 @@ ul.prosuct-qty{
 		clear: both;
 	}
 	span.menu{
+		z-index: 341;
 		display:block;
 		background:#b0aaa0;
 		cursor:pointer;
+		height: 35px;
 	}
 	span.menu:before{
 		content: url(../images/nav-icon.png) no-repeat 0px 0px;
