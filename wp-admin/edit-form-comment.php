@@ -33,7 +33,7 @@ if ( !defined('ABSPATH') )
 	<td><input type="text" name="newcomment_author" size="30" value="<?php echo esc_attr( $comment->comment_author ); ?>" id="name" /></td>
 </tr>
 <tr>
-	<td class="first"><label for="email"><?php _e( 'Email:' ); ?></label></td>
+	<td class="first"><label for="email"><?php _e( 'E-mail:' ); ?></label></td>
 	<td>
 		<input type="text" name="newcomment_author_email" size="30" value="<?php echo $comment->comment_author_email; ?>" id="email" />
 	</td>
@@ -171,7 +171,7 @@ do_action( 'add_meta_boxes', 'comment', $comment );
  *
  * @since 3.0.0
  *
- * @param WP_Comment $comment Comment object.
+ * @param object $comment Comment object.
  */
 do_action( 'add_meta_boxes_comment', $comment );
 

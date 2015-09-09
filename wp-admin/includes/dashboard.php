@@ -548,10 +548,10 @@ function wp_dashboard_recent_drafts( $drafts = false ) {
 }
 
 /**
- * @global WP_Comment $comment
+ * @global object $comment
  *
- * @param WP_Comment $comment
- * @param bool       $show_date
+ * @param object $comment
+ * @param bool   $show_date
  */
 function _wp_dashboard_recent_comments_row( &$comment, $show_date = true ) {
 	$GLOBALS['comment'] =& $comment;
@@ -603,10 +603,10 @@ function _wp_dashboard_recent_comments_row( &$comment, $show_date = true ) {
 		 *
 		 * @since 2.6.0
 		 *
-		 * @param array      $actions An array of comment actions. Default actions include:
-		 *                            'Approve', 'Unapprove', 'Edit', 'Reply', 'Spam',
-		 *                            'Delete', and 'Trash'.
-		 * @param WP_Comment $comment The comment object.
+		 * @param array  $actions An array of comment actions. Default actions include:
+		 *                        'Approve', 'Unapprove', 'Edit', 'Reply', 'Spam',
+		 *                        'Delete', and 'Trash'.
+		 * @param object $comment The comment object.
 		 */
 		$actions = apply_filters( 'comment_row_actions', array_filter($actions), $comment );
 
@@ -1036,15 +1036,7 @@ function wp_dashboard_primary() {
 			 * @param string $title Title attribute for the widget's secondary link.
 			 */
 			'title'        => apply_filters( 'dashboard_secondary_title', __( 'Other WordPress News' ) ),
-
-			/**
-			 * Filter the number of secondary link items for the 'WordPress News' dashboard widget.
-			 *
-			 * @since 4.4.0
-			 *
-			 * @param string $items How many items to show in the secondary feed.
-			 */
-			'items'        => apply_filters( 'dashboard_secondary_items', 3 ),
+			'items'        => 3,
 			'show_summary' => 0,
 			'show_author'  => 0,
 			'show_date'    => 0,
@@ -1077,7 +1069,7 @@ function wp_dashboard_primary() {
  * @param array  $feeds     Array of RSS feeds.
  */
 function wp_dashboard_primary_output( $widget_id, $feeds ) {
-	foreach ( $feeds as $type => $args ) {
+	foreach( $feeds as $type => $args ) {
 		$args['type'] = $type;
 		echo '<div class="rss-widget">';
 		if ( $type === 'plugins' ) {
@@ -1309,8 +1301,8 @@ function wp_check_browser_version() {
 		/**
 		 * Response should be an array with:
 		 *  'name' - string - A user friendly browser name
-		 *  'version' - string - The version of the browser the user is using
-		 *  'current_version' - string - The most recent version of the browser
+		 *  'version' - string - The most recent version of the browser
+		 *  'current_version' - string - The version of the browser the user is using
 		 *  'upgrade' - boolean - Whether the browser needs an upgrade
 		 *  'insecure' - boolean - Whether the browser is deemed insecure
 		 *  'upgrade_url' - string - The url to visit to upgrade

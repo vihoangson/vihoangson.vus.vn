@@ -289,6 +289,22 @@ function get_post_permalink( $id = 0, $leavename = false, $sample = false ) {
 }
 
 /**
+ * Retrieve permalink from post ID.
+ *
+ * @since 1.0.0
+ *
+ * @param int|WP_Post $post_id    Optional. Post ID or WP_Post object. Default is global $post.
+ * @param mixed       $deprecated Not used.
+ * @return string|false
+ */
+function post_permalink( $post_id = 0, $deprecated = '' ) {
+	if ( !empty( $deprecated ) )
+		_deprecated_argument( __FUNCTION__, '1.3' );
+
+	return get_permalink($post_id);
+}
+
+/**
  * Retrieve the permalink for current page or page ID.
  *
  * Respects page_on_front. Use this one.
@@ -1570,14 +1586,12 @@ function get_adjacent_post( $in_same_term = false, $excluded_terms = '', $previo
 	 * of adjacency, 'next' or 'previous'.
 	 *
 	 * @since 2.5.0
-	 * @since 4.4.0 Added the `$taxonomy` parameter.
 	 *
 	 * @param string $join           The JOIN clause in the SQL.
 	 * @param bool   $in_same_term   Whether post should be in a same taxonomy term.
 	 * @param array  $excluded_terms Array of excluded term IDs.
-	 * @param string $taxonomy       Taxonomy. Used to identify the term used when `$in_same_term` is true.
 	 */
-	$join = apply_filters( "get_{$adjacent}_post_join", $join, $in_same_term, $excluded_terms, $taxonomy );
+	$join  = apply_filters( "get_{$adjacent}_post_join", $join, $in_same_term, $excluded_terms );
 
 	/**
 	 * Filter the WHERE clause in the SQL for an adjacent post query.
@@ -1586,14 +1600,12 @@ function get_adjacent_post( $in_same_term = false, $excluded_terms = '', $previo
 	 * of adjacency, 'next' or 'previous'.
 	 *
 	 * @since 2.5.0
-	 * @since 4.4.0 Added the `$taxonomy` parameter.
 	 *
 	 * @param string $where          The `WHERE` clause in the SQL.
 	 * @param bool   $in_same_term   Whether post should be in a same taxonomy term.
 	 * @param array  $excluded_terms Array of excluded term IDs.
-	 * @param string $taxonomy       Taxonomy. Used to identify the term used when `$in_same_term` is true.
 	 */
-	$where = apply_filters( "get_{$adjacent}_post_where", $wpdb->prepare( "WHERE p.post_date $op %s AND p.post_type = %s $where", $current_post_date, $post->post_type ), $in_same_term, $excluded_terms, $taxonomy );
+	$where = apply_filters( "get_{$adjacent}_post_where", $wpdb->prepare( "WHERE p.post_date $op %s AND p.post_type = %s $where", $current_post_date, $post->post_type ), $in_same_term, $excluded_terms );
 
 	/**
 	 * Filter the ORDER BY clause in the SQL for an adjacent post query.
@@ -1949,7 +1961,7 @@ function adjacent_post_link( $format, $link, $in_same_term = false, $excluded_te
  *
  * @param int  $pagenum Optional. Page ID.
  * @param bool $escape  Optional. Whether to escape the URL for display, with esc_url(). Defaults to true.
- * 	                    Otherwise, prepares the URL with esc_url_raw().
+* 	                    Otherwise, prepares the URL with esc_url_raw().
  * @return string The link URL for the given page number.
  */
 function get_pagenum_link($pagenum = 1, $escape = true ) {
@@ -2427,26 +2439,6 @@ function _navigation_markup( $links, $class = 'posts-navigation', $screen_reader
 		<div class="nav-links">%3$s</div>
 	</nav>';
 
-	/**
-	 * Filter the navigation markup template.
-	 *
-	 * Note: The filtered template HTML must contain specifiers for the navigation
-	 * class (%1$s), the screen-reader-text value (%2$s), and placement of the
-	 * navigation links (%3$s):
-	 *
-	 *     <nav class="navigation %1$s" role="navigation">
-	 *         <h2 class="screen-reader-text">%2$s</h2>
-	 *         <div class="nav-links">%3$s</div>
-	 *     </nav>
-	 *
-	 * @since 4.4.0
-	 *
-	 * @param string $template The default template.
-	 * @param string $class    The class passed by the calling function.
-	 * @return string Navigation template.
-	 */
-	$template = apply_filters( 'navigation_markup_template', $template, $class );
-
 	return sprintf( $template, sanitize_html_class( $class ), esc_html( $screen_reader_text ), $links );
 }
 
@@ -2736,8 +2728,6 @@ function home_url( $path = '', $scheme = null ) {
  * @return string Home URL link with optional path appended.
 */
 function get_home_url( $blog_id = null, $path = '', $scheme = null ) {
-	global $pagenow;
-
 	$orig_scheme = $scheme;
 
 	if ( empty( $blog_id ) || !is_multisite() ) {
@@ -2749,7 +2739,7 @@ function get_home_url( $blog_id = null, $path = '', $scheme = null ) {
 	}
 
 	if ( ! in_array( $scheme, array( 'http', 'https', 'relative' ) ) ) {
-		if ( is_ssl() && ! is_admin() && 'wp-login.php' !== $pagenow )
+		if ( is_ssl() && ! is_admin() && 'wp-login.php' !== $GLOBALS['pagenow'] )
 			$scheme = 'https';
 		else
 			$scheme = parse_url( $url, PHP_URL_SCHEME );
@@ -3454,7 +3444,7 @@ function the_shortlink( $text = '', $title = '', $before = '', $after = '' ) {
  * @since 4.2.0
  *
  * @param mixed $id_or_email The Gravatar to retrieve a URL for. Accepts a user_id, gravatar md5 hash,
- *                           user email, WP_User object, WP_Post object, or WP_Comment object.
+ *                           user email, WP_User object, WP_Post object, or comment object.
  * @param array $args {
  *     Optional. Arguments to return instead of the default arguments.
  *
@@ -3485,8 +3475,8 @@ function get_avatar_url( $id_or_email, $args = null ) {
  *
  * @since 4.2.0
  *
- * @param mixed $id_or_email The Gravatar to retrieve. Accepts a user_id, gravatar md5 hash,
- *                            user email, WP_User object, WP_Post object, or WP_Comment object.
+ * @param mixed $id_or_email The Gravatar to check the data against. Accepts a user_id, gravatar md5 hash,
+ *                           user email, WP_User object, WP_Post object, or comment object.
  * @param array $args {
  *     Optional. Arguments to return instead of the default arguments.
  *
@@ -3586,9 +3576,8 @@ function get_avatar_data( $id_or_email, $args = null ) {
 	 *
 	 * @since 4.2.0
 	 *
-	 * @param array  $args        Arguments passed to get_avatar_data(), after processing.
-	 * @param mixed  $id_or_email The Gravatar to retrieve. Accepts a user_id, gravatar md5 hash,
-	 *                            user email, WP_User object, WP_Post object, or WP_Comment object.
+	 * @param array             $args          Arguments passed to get_avatar_data(), after processing.
+	 * @param int|object|string $id_or_email   A user ID, email address, or comment object.
 	 */
 	$args = apply_filters( 'pre_get_avatar_data', $args, $id_or_email );
 
@@ -3617,7 +3606,9 @@ function get_avatar_data( $id_or_email, $args = null ) {
 	} elseif ( $id_or_email instanceof WP_Post ) {
 		// Post Object
 		$user = get_user_by( 'id', (int) $id_or_email->post_author );
-	} elseif ( $id_or_email instanceof WP_Comment ) {
+	} elseif ( is_object( $id_or_email ) && isset( $id_or_email->comment_ID ) ) {
+		// Comment Object
+
 		/**
 		 * Filter the list of allowed comment types for retrieving avatars.
 		 *
@@ -3680,10 +3671,9 @@ function get_avatar_data( $id_or_email, $args = null ) {
 	 *
 	 * @since 4.2.0
 	 *
-	 * @param string $url         The URL of the avatar.
-	 * @param mixed  $id_or_email The Gravatar to retrieve. Accepts a user_id, gravatar md5 hash,
-	 *                            user email, WP_User object, WP_Post object, or WP_Comment object.
-	 * @param array  $args        Arguments passed to get_avatar_data(), after processing.
+	 * @param string            $url         The URL of the avatar.
+	 * @param int|object|string $id_or_email A user ID, email address, or comment object.
+	 * @param array             $args        Arguments passed to get_avatar_data(), after processing.
 	 */
 	$args['url'] = apply_filters( 'get_avatar_url', $url, $id_or_email, $args );
 
@@ -3692,9 +3682,8 @@ function get_avatar_data( $id_or_email, $args = null ) {
 	 *
 	 * @since 4.2.0
 	 *
-	 * @param array  $args        Arguments passed to get_avatar_data(), after processing.
-	 * @param mixed  $id_or_email The Gravatar to retrieve. Accepts a user_id, gravatar md5 hash,
-	 *                            user email, WP_User object, WP_Post object, or WP_Comment object.
+	 * @param array             $args        Arguments passed to get_avatar_data(), after processing.
+	 * @param int|object|string $id_or_email A user ID, email address, or comment object.
 	 */
 	return apply_filters( 'get_avatar_data', $args, $id_or_email );
 }
