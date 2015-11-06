@@ -1,0 +1,8 @@
+/**
+* @plugin name vihoangson
+* @plugin url http://vihoangson.vus.vn
+*/
+.download {
+    background: url("images/download_icon.png") no-repeat;
+    padding: 10px;
+}
